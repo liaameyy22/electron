@@ -945,9 +945,8 @@ describe('BrowserWindow module', () => {
           const allEvents = Promise.all(navigationEvents.map(event =>
             once(w.webContents, event).then(() => firedEvents.push(event))
           ));
-          const timeout = setTimeout(1000);
           w.loadURL(url);
-          await Promise.race([allEvents, timeout]);
+          await allEvents;
           expect(firedEvents).to.deep.equal(expectedEventOrder);
         });
 
